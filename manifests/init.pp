@@ -66,6 +66,7 @@ class filebeat (
   Optional[String] $config_dir_group                                                                                                         = $filebeat::params::config_dir_group,
   Boolean $purge_conf_dir                                                                                                                    = $filebeat::params::purge_conf_dir,
   Hash    $outputs                                                                                                                           = $filebeat::params::outputs,
+  Hash    $modules                                                                                                                           = $filebeat::params::modules,
   Hash    $shipper                                                                                                                           = $filebeat::params::shipper,
   Hash    $logging                                                                                                                           = $filebeat::params::logging,
   Hash    $run_options                                                                                                                       = $filebeat::params::run_options,
