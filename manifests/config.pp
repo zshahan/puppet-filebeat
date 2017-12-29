@@ -43,6 +43,7 @@ class filebeat::config {
         'shutdown_timeout' => $filebeat::shutdown_timeout,
       },
       'output'            => $filebeat::outputs,
+      'module'            => $filebeat::modules,
       'shipper'           => $filebeat::shipper,
       'logging'           => $filebeat::logging,
       'runoptions'        => $filebeat::run_options,
