@@ -39,6 +39,131 @@ queue_size: <%= @filebeat_config['queue_size'] %>
 max_procs: <%= @filebeat_config['max_procs'] %>
 <%- end -%>
 
+#==========================  Modules configuration ============================
+filebeat.modules:
+<%- if @filebeat_config['module']['system'] != nil %>
+- module: system
+  <%- if @filebeat_config['module']['system']['syslog'] != nil %>
+  syslog:
+    <%- if @filebeat_config['module']['system']['syslog']['enabled'] != nil %>
+    enabled: <%= @filebeat_config['module']['system']['syslog']['enabled'] %>
+    <%- end %>
+    <%- if @filebeat_config['module']['system']['syslog']['paths'] != nil %>
+    var.paths: [
+    <%- @filebeat_config['module']['system']['syslog']['paths'].each do |path| %>
+      "<%= path %>",
+    <%- end %>
+    ]
+    <%- end %>
+  <%- end %>
+<%- end %>
+<%- if @filebeat_config['module']['apache2'] != nil %>
+- module: apache2
+  <%- if @filebeat_config['module']['apache2']['access'] != nil %>
+  access:
+    <%- if @filebeat_config['module']['apache2']['access']['enabled'] != nil %>
+    enabled: <%= @filebeat_config['module']['apache2']['access']['enabled'] %>
+    <%- end %>
+    <%- if @filebeat_config['module']['apache2']['access']['pipeline'] != nil %>
+    var.pipeline: <%= @filebeat_config['module']['apache2']['access']['pipeline'] %>
+    <%- end %>
+    <%- if @filebeat_config['module']['apache2']['access']['paths'] != nil %>
+    var.paths: [
+    <%- @filebeat_config['module']['apache2']['access']['paths'].each do |path| %>
+      "<%= path %>",
+    <%- end %>
+    ]
+    <%- end %>
+  <%- end %>
+  <%- if @filebeat_config['module']['apache2']['error'] != nil %>
+  error:
+    <%- if @filebeat_config['module']['apache2']['error']['enabled'] != nil %>
+    enabled: <%= @filebeat_config['module']['apache2']['error']['enabled'] %>
+    <%- end %>
+    <%- if @filebeat_config['module']['apache2']['error']['paths'] != nil %>
+    var.paths: [
+    <%- @filebeat_config['module']['apache2']['error']['paths'].each do |path| %>
+      "<%= path %>",
+    <%- end %>
+    ]
+    <%- end %>
+  <%- end %>
+<%- end %>
+<%- if @filebeat_config['module']['auditd'] != nil %>
+- module: auditd
+  <%- if @filebeat_config['module']['auditd']['log'] != nil %>
+  log:
+    enabled: <%= @filebeat_config['module']['auditd']['log']['enabled']  %>
+
+    <%- if @filebeat_config['module']['auditd']['log']['paths'] != nil %>
+    var.paths: [
+    <%- @filebeat_config['module']['auditd']['log']['paths'].each do |path| %>
+      "<%= path %>",
+    <%- end %>
+    ]
+    <%- end %>
+  <%- end %>
+<%- end %>
+<%- if @filebeat_config['module']['mysql'] != nil %>
+- module: mysql
+  # Error logs
+  <%- if @filebeat_config['module']['mysql']['error'] != nil %>
+  error:
+    <%- if @filebeat_config['module']['mysql']['error']['enabled'] != nil %>
+    enabled: <%= @filebeat_config['module']['mysql']['error']['enabled'] %>
+    <%- end %>
+    <%- if @filebeat_config['module']['mysql']['error']['paths'] != nil %>
+    var.paths: [
+    <%- @filebeat_config['module']['mysql']['error']['paths'].each do |path| %>
+      "<%= path %>",
+    <%- end %>
+    ]
+    <%- end %>
+  <%- end %>
+  <%- if @filebeat_config['module']['mysql']['slowlog'] != nil %>
+  slowlog:
+    <%- if @filebeat_config['module']['mysql']['slowlog']['enabled'] != nil %>
+    enabled: <%= @filebeat_config['module']['mysql']['slowlog']['enabled'] %>
+    <%- end %>
+    <%- if @filebeat_config['module']['mysql']['slowlog']['paths'] != nil %>
+    var.paths: [
+    <%- @filebeat_config['module']['mysql']['slowlog']['paths'].each do |path| %>
+      "<%= path %>",
+    <%- end %>
+    ]
+    <%- end %>
+  <%- end %>
+<%- end %>
+<%- if @filebeat_config['module']['nginx'] != nil %>
+- module: nginx
+  <%- if @filebeat_config['module']['nginx']['access'] != nil %>
+  access:
+    <%- if @filebeat_config['module']['nginx']['access']['enabled'] != nil %>
+    enabled: <%= @filebeat_config['module']['nginx']['access']['enabled'] %>
+    <%- end %>
+    <%- if @filebeat_config['module']['nginx']['access']['paths'] != nil %>
+    var.paths: [
+    <%- @filebeat_config['module']['nginx']['access']['paths'].each do |path| %>
+      "<%= path %>",
+    <%- end %>
+    ]
+    <%- end %>
+  <%- end %>
+  <%- if @filebeat_config['module']['nginx']['error'] != nil %>
+  error:
+    <%- if @filebeat_config['module']['nginx']['error']['enabled'] != nil %>
+    enabled: <%= @filebeat_config['module']['nginx']['error']['enabled'] %>
+    <%- end %>
+    <%- if @filebeat_config['module']['nginx']['error']['paths'] != nil %>
+    var.paths: [
+    <%- @filebeat_config['module']['nginx']['error']['paths'].each do |path| %>
+      "<%= path %>",
+    <%- end %>
+    ]
+    <%- end %>
+  <%- end %>
+<%- end %>
+
 #================================ Processors =====================================
 
 # Processors are used to reduce the number of fields in the exported event or to
